@@ -35,7 +35,7 @@ const Navbar = () => {
         </div>
         <div className="md:hidden">
           <button
-            className="text-white focus:outline-none"
+            className="text-white focus:outline-none cursor-pointer min-w-5"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {!menuOpen ? "☰" : "X"}
