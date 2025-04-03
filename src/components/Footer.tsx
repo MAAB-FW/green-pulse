@@ -1,12 +1,12 @@
 const Footer = () => {
   return (
     <>
-      <footer className="bg-gray-900 text-white py-4 mt-8">
+      <footer className="bg-gray-900 py-4 text-white">
         <div className="container mx-auto text-center">
           <p>
             &copy; {new Date().getFullYear()} Green Pulse. All rights reserved.
           </p>
-          <div className="flex justify-center space-x-4 mt-2">
+          <div className="mt-2 flex justify-center space-x-4">
             <a href="#" className="hover:text-green-500">
               Privacy Policy
             </a>
