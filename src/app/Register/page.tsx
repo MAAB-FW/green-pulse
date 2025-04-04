@@ -25,7 +25,9 @@ const RegisterPage: React.FC = () => {
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match.");
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/.test(
+        formData.password
+      )
     ) {
       return setError(
         "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long"
