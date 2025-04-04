@@ -2,6 +2,8 @@
 import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { NEXT_PUBLIC_API_URL } from "../../../env";
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -33,16 +35,32 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/users", formData);
+      await axios.post(`${NEXT_PUBLIC_API_URL}/api/users`, formData);
+      toast.success("Registration successful! Please log in.");
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      return window.location.replace("/Login");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error("API Error:", error.response.data);
-      } else {
-        console.error("Unexpected Error:", error);
+        if (
+          error.response.data.message &&
+          error.response.data.message.includes("E11000 duplicate key error")
+        ) {
+          toast.error(
+            "This email is already registered. Please use another email."
+          );
+        } else {
+          toast.error(
+            error.response.data.message ||
+              "An error occurred during registration."
+          );
+        }
       }
     }
-
-    console.log("Form submitted:", formData);
   };
 
   return (
