@@ -8,18 +8,27 @@ const Navbar = () => {
 
   const navLinks: navLinks = [
     { name: "Home", href: "/" },
-    { name: "About Us", href: "/AboutUs" },
-    { name: "Events", href: "/Events" },
-    { name: "Donate", href: "/Donate" },
-    { name: "Contact", href: "/Contact" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Events", href: "/events" },
+    { name: "Donate", href: "/donate" },
+    { name: "Contact", href: "/contact" },
   ];
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <>
-      <div className="flex items-center justify-between p-4 bg-gray-900 text-white">
+      <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
         <div className="text-xl font-bold">Green Pulse</div>
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden items-center space-x-4 md:flex">
           {navLinks.map((link) => (
-            <Link href={link.href} key={link.name} className="hover:underline">
+            <Link
+              onClick={closeMenu}
+              href={link.href}
+              key={link.name}
+              className="hover:underline"
+            >
               {link.name}
             </Link>
           ))}
@@ -28,15 +37,15 @@ const Navbar = () => {
           </Link>
           <Link
             href="/Register"
-            className="px-4 py-2 bg-green-500 text-white rounded-lg"
+            className="rounded-lg bg-green-500 px-4 py-2 text-white"
           >
             Register
           </Link>
         </div>
         <div className="md:hidden">
           <button
-            className="text-white focus:outline-none cursor-pointer min-w-5"
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="min-w-5 cursor-pointer text-white focus:outline-none"
+            onClick={closeMenu}
           >
             {!menuOpen ? "☰" : "X"}
           </button>
@@ -44,9 +53,10 @@ const Navbar = () => {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-gray-800 text-white p-4 space-y-2">
+        <div className="space-y-2 bg-gray-800 p-4 text-white md:hidden">
           {navLinks.map((link) => (
             <Link
+              onClick={() => setMenuOpen(!menuOpen)}
               href={link.href}
               key={link.name}
               className="block hover:underline"
@@ -59,7 +69,7 @@ const Navbar = () => {
           </Link>
           <Link
             href="#"
-            className="block px-4 py-2 bg-green-500 text-white rounded-lg"
+            className="block rounded-lg bg-green-500 px-4 py-2 text-white"
           >
             Register
           </Link>
