@@ -1,9 +1,11 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -16,12 +18,28 @@ const RegisterPage: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match.");
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)
+    ) {
+      return setError(
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and be at least 8 characters long"
+      );
     } else {
       setError(null);
+    }
+
+    try {
+      await axios.post("http://localhost:5000/api/users", formData);
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("API Error:", error.response.data);
+      } else {
+        console.error("Unexpected Error:", error);
+      }
     }
 
     console.log("Form submitted:", formData);
@@ -34,6 +52,23 @@ const RegisterPage: React.FC = () => {
           Register
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="mb-2 block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
           <div>
             <label
               htmlFor="email"
