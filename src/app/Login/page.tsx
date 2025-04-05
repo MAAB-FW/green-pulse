@@ -1,8 +1,13 @@
 "use client";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { NEXT_PUBLIC_API_URL } from "../../../env";
 
-const Page = () => {
+const Login = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,9 +18,24 @@ const Page = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await axios.post(
+        `${NEXT_PUBLIC_API_URL}/api/users/login`,
+        formData
+      );
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      toast.success("Login successful!");
+      router.push("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Login failed");
+      } else {
+        alert("An unexpected error occurred");
+      }
+    }
   };
 
   return (
@@ -84,4 +104,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Login;
