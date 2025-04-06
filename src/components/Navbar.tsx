@@ -1,7 +1,9 @@
 "use client";
+import store from "@/redux/store";
 import { NavLinks } from "@/types";
 import Link from "next/link";
 import React from "react";
+import { Provider } from "react-redux";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -18,7 +20,7 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <Provider store={store}>
       <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
         <div className="text-xl font-bold">Green Pulse</div>
         <div className="hidden items-center space-x-4 md:flex">
@@ -75,7 +77,7 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-    </>
+    </Provider>
   );
 };
 
