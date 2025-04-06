@@ -1,12 +1,12 @@
 "use client";
-import { navLinks } from "@/types";
+import { NavLinks } from "@/types";
 import Link from "next/link";
 import React from "react";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const navLinks: navLinks = [
+  const navLinks: NavLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about-us" },
     { name: "Events", href: "/events" },
