@@ -1,8 +1,10 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import store from "@/redux/store";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { Provider } from "react-redux";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,12 +33,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} !bg-[#f3f4f6] antialiased`}
       >
-        <Navbar />
-        <div className="my-4 min-h-[calc(100vh-72px)] md:my-8 lg:my-12">
-          {children}
-        </div>
-        <Footer />
-        <Toaster />
+        <Provider store={store}>
+          <Navbar />
+          <div className="my-4 min-h-[calc(100vh-72px)] md:my-8 lg:my-12">
+            {children}
+          </div>
+          <Footer />
+          <Toaster />
+        </Provider>
       </body>
     </html>
   );
