@@ -14,7 +14,7 @@ const Navbar = () => {
     { name: "Contact", href: "/contact" },
   ];
   const closeMenu = () => {
-    setMenuOpen(false);
+    setMenuOpen(!menuOpen);
   };
 
   return (
