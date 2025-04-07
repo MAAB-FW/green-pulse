@@ -1,4 +1,5 @@
 "use client";
+import ReduxProvider from "@/services/ReduxProvider";
 import { NavLinks } from "@/types";
 import Link from "next/link";
 import React from "react";
@@ -18,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <ReduxProvider>
       <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
         <div className="text-xl font-bold">Green Pulse</div>
         <div className="hidden items-center space-x-4 md:flex">
@@ -32,15 +33,17 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="/Login" className="hover:underline">
-            Login
-          </Link>
-          <Link
-            href="/Register"
-            className="rounded-lg bg-green-500 px-4 py-2 text-white"
-          >
-            Register
-          </Link>
+          <>
+            <Link href="/Login" className="hover:underline">
+              Login
+            </Link>
+            <Link
+              href="/Register"
+              className="rounded-lg bg-green-500 px-4 py-2 text-white"
+            >
+              Register
+            </Link>
+          </>
         </div>
         <div className="md:hidden">
           <button
@@ -56,7 +59,7 @@ const Navbar = () => {
         <div className="space-y-2 bg-gray-800 p-4 text-white md:hidden">
           {navLinks.map((link) => (
             <Link
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={closeMenu}
               href={link.href}
               key={link.name}
               className="block hover:underline"
@@ -64,10 +67,11 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="#" className="block hover:underline">
+          <Link onClick={closeMenu} href="#" className="block hover:underline">
             Login
           </Link>
           <Link
+            onClick={closeMenu}
             href="#"
             className="block rounded-lg bg-green-500 px-4 py-2 text-white"
           >
@@ -75,8 +79,40 @@ const Navbar = () => {
           </Link>
         </div>
       )}
-    </>
+    </ReduxProvider>
   );
 };
 
 export default Navbar;
+
+// function UserOrLogin() {
+//   const { name } = useSelector((state: RootState) => state.userSlice);
+
+//   return (
+//     <>
+//       {!name ? (
+//         <>
+//           <Link href="/Login" className="hover:underline">
+//             Login
+//           </Link>
+//           <Link
+//             href="/Register"
+//             className="rounded-lg bg-green-500 px-4 py-2 text-white"
+//           >
+//             Register
+//           </Link>
+//         </>
+//       ) : (
+//         <div className="flex items-center space-x-4">
+//           <span>Welcome, {name}</span>
+//           <Link
+//             href="/Profile"
+//             className="rounded-lg bg-blue-500 px-4 py-2 text-white"
+//           >
+//             Profile
+//           </Link>
+//         </div>
+//       )}
+//     </>
+//   );
+// }
