@@ -1,6 +1,5 @@
 "use client";
 import { auth } from "@/firebase/firebase.config";
-import axios from "axios";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -65,20 +64,17 @@ const RegisterPage: React.FC = () => {
         }
       });
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        if (
-          error.response.data.message &&
-          error.response.data.message.includes("E11000 duplicate key error")
-        ) {
-          toast.error(
-            "This email is already registered. Please use another email."
-          );
-        } else {
-          toast.error(
-            error.response.data.message ||
-              "An error occurred during registration."
-          );
-        }
+      if (
+        error instanceof Error &&
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message
+      ) {
+        toast.error(
+          (error as { response?: { data?: { message?: string } } }).response
+            ?.data?.message || "An error occurred during registration."
+        );
+      } else {
+        toast.error("An unexpected error occurred.");
       }
     }
   };
