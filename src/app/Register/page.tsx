@@ -1,9 +1,10 @@
 "use client";
+import { auth } from "@/firebase/firebase.config";
 import axios from "axios";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { NEXT_PUBLIC_API_URL } from "../../../env";
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -37,15 +38,32 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await axios.post(`${NEXT_PUBLIC_API_URL}/api/users`, formData);
-      toast.success("Registration successful! Please log in.");
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
+      createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      ).then((userCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          if (auth.currentUser) {
+            updateProfile(auth.currentUser, {
+              displayName: formData.name,
+            });
+          } else {
+            throw new Error("No authenticated user found.");
+          }
+          setFormData({
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+          toast.success("Registration successful! Please log in.");
+          return window.location.replace("/Login");
+        } else {
+          throw new Error("User creation failed.");
+        }
       });
-      return window.location.replace("/Login");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         if (

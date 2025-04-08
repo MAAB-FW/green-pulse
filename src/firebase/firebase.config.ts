@@ -2,24 +2,24 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import {
-  NEXTAUTH_APIKEY,
-  NEXTAUTH_APPID,
-  NEXTAUTH_AUTHDOMAIN,
-  NEXTAUTH_MESSAGINGSENDERID,
-  NEXTAUTH_PROJECTID,
-  NEXTAUTH_STORAGEBUCKET,
+  NEXT_PUBLIC_APIKEY,
+  NEXT_PUBLIC_APPID,
+  NEXT_PUBLIC_AUTHDOMAIN,
+  NEXT_PUBLIC_MESSAGINGSENDERID,
+  NEXT_PUBLIC_PROJECTID,
+  NEXT_PUBLIC_STORAGEBUCKET,
 } from "../../env";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: NEXTAUTH_APIKEY,
-  authDomain: NEXTAUTH_AUTHDOMAIN,
-  projectId: NEXTAUTH_PROJECTID,
-  storageBucket: NEXTAUTH_STORAGEBUCKET,
-  messagingSenderId: NEXTAUTH_MESSAGINGSENDERID,
-  appId: NEXTAUTH_APPID,
+  apiKey: NEXT_PUBLIC_APIKEY,
+  authDomain: NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: NEXT_PUBLIC_PROJECTID,
+  storageBucket: NEXT_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: NEXT_PUBLIC_APPID,
 };
 
 // Initialize Firebase
