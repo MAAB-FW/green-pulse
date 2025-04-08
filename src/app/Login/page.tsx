@@ -1,13 +1,11 @@
 "use client";
+import { auth } from "@/firebase/firebase.config";
 import ReduxProvider from "@/services/ReduxProvider";
-import axios from "axios";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { NEXT_PUBLIC_API_URL } from "../../../env";
-import { setUser } from "../../redux/features/user/userSlice";
 
 const Login = () => {
   return (
@@ -36,7 +34,6 @@ export default Login;
 
 function Form() {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -50,32 +47,21 @@ function Form() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${NEXT_PUBLIC_API_URL}/api/users/login`,
-        formData
-      );
-      const { token, user } = response.data;
-      localStorage.setItem("token", token);
-      dispatch(
-        setUser({
-          name: user.name,
-          email: user.email,
-          _id: user._id,
-          error: "",
-          isError: false,
-          isLoading: false,
-        })
-      );
-      toast.success("Login successful!");
-      router.push("/");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Login failed");
-      } else {
-        alert("An unexpected error occurred");
-      }
-    }
+
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((res) => {
+        const user = res.user;
+        if (user) {
+          toast.success("Login successful!");
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        toast.error(
+          (error as { response?: { data?: { message?: string } } }).response
+            ?.data?.message || "An error occurred during login."
+        );
+      });
   };
 
   return (
