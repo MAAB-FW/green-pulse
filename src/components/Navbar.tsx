@@ -1,8 +1,10 @@
 "use client";
+import { RootState } from "@/redux/store";
 import ReduxProvider from "@/services/ReduxProvider";
 import { NavLinks } from "@/types";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -33,17 +35,7 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <>
-            <Link href="/Login" className="hover:underline">
-              Login
-            </Link>
-            <Link
-              href="/Register"
-              className="rounded-lg bg-green-500 px-4 py-2 text-white"
-            >
-              Register
-            </Link>
-          </>
+          <UserOrLogin />
         </div>
         <div className="md:hidden">
           <button
@@ -67,16 +59,7 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link onClick={closeMenu} href="#" className="block hover:underline">
-            Login
-          </Link>
-          <Link
-            onClick={closeMenu}
-            href="#"
-            className="block rounded-lg bg-green-500 px-4 py-2 text-white"
-          >
-            Register
-          </Link>
+          <UserOrLogin />
         </div>
       )}
     </ReduxProvider>
@@ -85,34 +68,29 @@ const Navbar = () => {
 
 export default Navbar;
 
-// function UserOrLogin() {
-//   const { name } = useSelector((state: RootState) => state.userSlice);
+function UserOrLogin() {
+  const { name } = useSelector((state: RootState) => state.userSlice);
 
-//   return (
-//     <>
-//       {!name ? (
-//         <>
-//           <Link href="/Login" className="hover:underline">
-//             Login
-//           </Link>
-//           <Link
-//             href="/Register"
-//             className="rounded-lg bg-green-500 px-4 py-2 text-white"
-//           >
-//             Register
-//           </Link>
-//         </>
-//       ) : (
-//         <div className="flex items-center space-x-4">
-//           <span>Welcome, {name}</span>
-//           <Link
-//             href="/Profile"
-//             className="rounded-lg bg-blue-500 px-4 py-2 text-white"
-//           >
-//             Profile
-//           </Link>
-//         </div>
-//       )}
-//     </>
-//   );
-// }
+  return (
+    <>
+      {!name ? (
+        <>
+          <Link href="/Login" className="hover:underline">
+            Login
+          </Link>
+          <Link
+            href="/Register"
+            className="rounded-lg bg-green-500 px-4 py-2 text-white"
+          >
+            Register
+          </Link>
+        </>
+      ) : (
+        <div className="flex items-center space-x-2">
+          <span className="text-sm text-blue-300">Welcome,</span>
+          <span className="font-semibold text-yellow-400">{name}</span>
+        </div>
+      )}
+    </>
+  );
+}
