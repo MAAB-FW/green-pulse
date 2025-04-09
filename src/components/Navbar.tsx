@@ -1,10 +1,13 @@
 "use client";
+import { auth } from "@/firebase/firebase.config";
+import { logOut } from "@/redux/features/user/userSlice";
 import { RootState } from "@/redux/store";
 import ReduxProvider from "@/services/ReduxProvider";
 import { NavLinks } from "@/types";
+import { signOut } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -70,6 +73,12 @@ export default Navbar;
 
 function UserOrLogin() {
   const { name } = useSelector((state: RootState) => state.userSlice);
+  const dispatch = useDispatch();
+  const logout = () => {
+    signOut(auth).then(() => {
+      dispatch(logOut());
+    });
+  };
 
   return (
     <>
@@ -86,9 +95,17 @@ function UserOrLogin() {
           </Link>
         </>
       ) : (
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-blue-300">Welcome,</span>
-          <span className="font-semibold text-yellow-400">{name}</span>
+        <div className="flex items-center justify-between space-x-2">
+          <div className="space-x-1">
+            <span className="text-sm text-blue-300">Welcome,</span>
+            <span className="font-semibold text-yellow-400">{name}</span>
+          </div>
+          <button
+            onClick={logout}
+            className="cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+          >
+            Logout
+          </button>
         </div>
       )}
     </>
