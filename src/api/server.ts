@@ -2,6 +2,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { connectDB } from "./config/db";
+import checkoutRoutes from "./routes/checkout.route";
 import userRoutes from "./routes/user.routes";
 
 dotenv.config();
@@ -18,6 +19,7 @@ connectDB();
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/checkout", checkoutRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");
