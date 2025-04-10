@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
@@ -14,12 +16,12 @@ export default function Home() {
             Promoting sustainability, conservation, and climate action for a
             better future.
           </p>
-          <a
-            href="#donate"
+          <Link
+            href="/donate"
             className="xs:px-2 xs:py-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700 sm:px-3 sm:py-1"
           >
             Donate Now
-          </a>
+          </Link>
         </div>
       </section>
 
