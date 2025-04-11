@@ -4,7 +4,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactNode => {
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

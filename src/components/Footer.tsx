@@ -1,4 +1,4 @@
-const Footer = () => {
+const Footer = (): React.ReactNode => {
   return (
     <>
       <footer className="bg-gray-900 py-4 text-white">

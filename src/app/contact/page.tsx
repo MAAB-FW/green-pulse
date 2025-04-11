@@ -1,4 +1,4 @@
-export default function Contact() {
+export default function Contact(): React.ReactNode {
   return (
     <div className="container mx-auto max-w-4xl rounded-xl bg-white bg-gradient-to-r p-6 shadow-lg sm:p-8">
       <h2 className="mb-6 text-center text-3xl font-extrabold text-indigo-800 sm:mb-8 sm:text-5xl">

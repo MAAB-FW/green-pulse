@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY } from "../../../../env";
 
 const stripePromise = loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
-const Payment = () => {
+const Payment = (): React.ReactNode => {
   const amount = 40;
   const [isLoading, setIsLoading] = useState(false);
   return (

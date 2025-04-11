@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const Login = () => {
+const Login = (): React.ReactNode => {
   return (
     <ReduxProvider>
       <div className="login-page flex min-h-screen flex-col items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">

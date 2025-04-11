@@ -1,4 +1,4 @@
-export default function AboutUs() {
+export default function AboutUs(): React.ReactNode {
   return (
     <div className="container mx-auto p-6">
       <h2 className="mb-6 text-center text-4xl font-extrabold text-gray-800">

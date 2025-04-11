@@ -1,4 +1,4 @@
-export default function Events() {
+export default function Events(): React.ReactNode {
   return (
     <div className="container mx-auto rounded-lg bg-white p-8 shadow-lg">
       <h2 className="mb-6 text-center text-4xl font-bold text-green-700">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Home() {
+export default function Home(): React.ReactNode {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}

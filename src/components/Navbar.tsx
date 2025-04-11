@@ -9,7 +9,7 @@ import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Navbar = () => {
+const Navbar = (): React.ReactNode => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const navLinks: NavLinks = [
