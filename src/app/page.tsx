@@ -73,12 +73,12 @@ export default function Home(): React.ReactNode {
             Your donations help us organize events, support volunteers, and
             drive impactful initiatives.
           </p>
-          <a
+          <Link
             href="/donate"
             className="xs:px-2 xs:py-1 rounded bg-white px-4 py-2 text-green-600 hover:bg-gray-200 sm:px-3 sm:py-1"
           >
             Donate Now
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -91,12 +91,12 @@ export default function Home(): React.ReactNode {
           <p className="xs:text-xs mb-4 text-gray-700 sm:text-sm">
             Have questions or want to get involved? Reach out to us!
           </p>
-          <a
+          <Link
             href="/contact"
             className="xs:px-2 xs:py-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-700 sm:px-3 sm:py-1"
           >
             Contact Us
-          </a>
+          </Link>
         </div>
       </section>
     </div>
