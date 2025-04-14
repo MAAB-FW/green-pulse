@@ -75,14 +75,17 @@ const CheckoutForm = ({
   const stripe = useStripe();
   const elements = useElements();
   const { name, email } = useSelector((state: RootState) => state.userSlice);
+  const [isCardComplete, setIsCardComplete] = useState(false);
 
   // get clientSecret from server
   const [paymentIntent, { data, error }] = useCreatePaymentIntentMutation();
 
   const clientSecret = data?.client_secret || "";
   useEffect(() => {
-    paymentIntent({ price: Math.round(amount * 100) });
-  }, [amount, paymentIntent]);
+    if (isCardComplete && amount > 0) {
+      paymentIntent({ price: Math.round(amount * 100) });
+    }
+  }, [amount, isCardComplete, paymentIntent]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -154,6 +157,7 @@ const CheckoutForm = ({
               },
             },
           }}
+          onChange={(event) => setIsCardComplete(event.complete)}
         />
         <div className="w-full">
           {error && (
@@ -167,11 +171,18 @@ const CheckoutForm = ({
           )}
           <button
             type="submit"
-            disabled={!stripe || !clientSecret || isLoading || !email}
+            disabled={
+              !stripe ||
+              !clientSecret ||
+              isLoading ||
+              !email ||
+              !isCardComplete ||
+              amount <= 0
+            }
             className="w-full rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-400"
           >
             {isLoading ? (
-              <CgSpinner className="w-8 animate-spin text-xl" />
+              <CgSpinner className="w-full animate-spin text-xl" />
             ) : (
               `Proceed to Payment ${amount > 0 ? "$" + amount : ""}`
             )}
