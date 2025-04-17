@@ -7,14 +7,14 @@ export default function Button(): React.ReactNode {
   const router = useRouter();
   const { name, email } = useSelector((state: RootState) => state.userSlice);
 
-  const redirect = () => {
+  const redirect = (): void => {
     if (!name || !email) {
       toast.error("Please log in to donate.");
       return;
     }
-    // Redirect to payment gateway or donation page
     router.push("/donate/payment");
   };
+
   return (
     <button
       onClick={redirect}

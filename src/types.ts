@@ -8,3 +8,11 @@ export type User = {
   isError: boolean;
   error: string;
 };
+
+export interface PaymentIntentRequest {
+  price: number;
+}
+
+export interface PaymentIntentResponse {
+  client_secret: string;
+}

@@ -13,7 +13,6 @@ export const checkoutController: checkoutController = {
   getPaymentIntent: async (req: Request, res: Response) => {
     try {
       const { price } = req.body;
-      console.log("🚀 ~ getPaymentIntent: ~ price:", price)
       const amount = parseInt(price);
 
       const { client_secret } = await stripe.paymentIntents.create({

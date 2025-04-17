@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { PaymentIntentRequest, PaymentIntentResponse } from "@/types";
 
 export const baseApi = createApi({
   reducerPath: "api",
@@ -6,7 +7,7 @@ export const baseApi = createApi({
     baseUrl: "http://localhost:5000/api",
   }),
   endpoints: (builder) => ({
-    createPaymentIntent: builder.mutation({
+    createPaymentIntent: builder.mutation<PaymentIntentResponse, PaymentIntentRequest>({
       query: ({ price }) => ({
         url: "/checkout/payment-intent",
         method: "POST",
