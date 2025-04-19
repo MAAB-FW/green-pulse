@@ -1,4 +1,5 @@
 export type NavLinks = { name: string; href: string }[];
+export type UserType = "admin" | "user" | "publisher";
 
 export type User = {
   _id: string;

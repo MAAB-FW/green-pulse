@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      enum: ["admin", "user", "publisher"],
+      default: "user",
+    },
     email: {
       type: String,
       required: true,

@@ -27,7 +27,11 @@ export const userController: UserController = {
     try {
       const { password, ...otherData } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ ...otherData, password: hashedPassword });
+      const user = new User({
+        ...otherData,
+        type: "user",
+        password: hashedPassword,
+      });
       const savedUser = await user.save();
       res.status(201).json(savedUser);
     } catch (error) {
