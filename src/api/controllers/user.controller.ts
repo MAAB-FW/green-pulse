@@ -6,6 +6,7 @@ import { User } from "../models/user.model";
 
 interface UserController {
   getAllUsers: (req: Request, res: Response) => Promise<void>;
+  getUserRoleByEmail: (req: Request, res: Response) => Promise<void>;
   createUser: (req: Request, res: Response) => Promise<void>;
   loginUser: (req: Request, res: Response) => Promise<void>;
 }
@@ -15,6 +16,27 @@ export const userController: UserController = {
     try {
       const users = await User.find();
       res.json(users);
+    } catch (error) {
+      res.status(500).json({
+        message:
+          error instanceof Error ? error.message : "An unknown error occurred",
+      });
+    }
+  },
+
+  getUserRoleByEmail: async (req: Request, res: Response) => {
+    try {
+      const email = req.params.email;
+      if (!email) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+      const user = await User.findOne({ email });
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+      res.json(user.type);
     } catch (error) {
       res.status(500).json({
         message:
