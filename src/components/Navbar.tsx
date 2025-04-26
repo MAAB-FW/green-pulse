@@ -3,22 +3,41 @@ import { auth } from "@/firebase/firebase.config";
 import { logOut } from "@/redux/features/user/userSlice";
 import { RootState } from "@/redux/store";
 import ReduxProvider from "@/services/ReduxProvider";
-import { NavLinks } from "@/types";
+import { NavLinks, UserType } from "@/types";
 import { signOut } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+const navLinks: NavLinks = [
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Events", href: "/events" },
+  { name: "Donate", href: "/donate" },
+  { name: "Contact", href: "/contact" },
+];
+const adminNav: NavLinks = [
+  { name: "Donations", href: "/dashboard/admin/donations" },
+  { name: "Event Management", href: "/dashboard/admin/event-management" },
+  { name: "Manage Users", href: "/dashboard/admin/manage-users" },
+  { name: "overview", href: "/dashboard/admin/Overview" },
+  {
+    name: "Reports And Analytics",
+    href: "/dashboard/admin/reports-n-analytics",
+  },
+];
+const publisherNav: NavLinks = [
+  { name: "Available Events", href: "/dashboard/publisher/available-events" },
+  {
+    name: "My Assigned Events",
+    href: "/dashboard/publisher/my-assigned-events",
+  },
+  { name: "Progress Reports", href: "/dashboard/publisher/progress-reports" },
+];
+
 const Navbar = (): React.ReactNode => {
   const [menuOpen, setMenuOpen] = React.useState(false);
 
-  const navLinks: NavLinks = [
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about-us" },
-    { name: "Events", href: "/events" },
-    { name: "Donate", href: "/donate" },
-    { name: "Contact", href: "/contact" },
-  ];
   const closeMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -28,16 +47,7 @@ const Navbar = (): React.ReactNode => {
       <div className="flex items-center justify-between bg-gray-900 p-4 text-white">
         <div className="text-xl font-bold">Green Pulse</div>
         <div className="hidden items-center space-x-4 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              onClick={closeMenu}
-              href={link.href}
-              key={link.name}
-              className="hover:underline"
-            >
-              {link.name}
-            </Link>
-          ))}
+          <Navs closeMenu={closeMenu} menuOpen={menuOpen} />
           <UserOrLogin />
         </div>
         <div className="md:hidden">
@@ -52,16 +62,7 @@ const Navbar = (): React.ReactNode => {
 
       {menuOpen && (
         <div className="space-y-2 bg-gray-800 p-4 text-white md:hidden">
-          {navLinks.map((link) => (
-            <Link
-              onClick={closeMenu}
-              href={link.href}
-              key={link.name}
-              className="block hover:underline"
-            >
-              {link.name}
-            </Link>
-          ))}
+          <Navs closeMenu={closeMenu} menuOpen={menuOpen} />
           <UserOrLogin />
         </div>
       )}
@@ -108,6 +109,56 @@ function UserOrLogin() {
           </button>
         </div>
       )}
+    </>
+  );
+}
+
+function Navs({
+  closeMenu,
+  menuOpen,
+}: {
+  closeMenu: React.MouseEventHandler<HTMLAnchorElement>;
+  menuOpen: boolean;
+}): React.ReactNode {
+  const { role }: { role: UserType } = useSelector(
+    (state: RootState) => state.roleSlice
+  );
+
+  return (
+    <>
+      {role === "user" &&
+        navLinks.map((link) => (
+          <Link
+            onClick={closeMenu}
+            href={link.href}
+            key={link.name}
+            className={`${menuOpen && "block"} hover:underline`}
+          >
+            {link.name}
+          </Link>
+        ))}
+      {role === "admin" &&
+        adminNav.map((link) => (
+          <Link
+            onClick={closeMenu}
+            href={link.href}
+            key={link.name}
+            className={`${menuOpen && "block"} hover:underline`}
+          >
+            {link.name}
+          </Link>
+        ))}
+      {role === "publisher" &&
+        publisherNav.map((link) => (
+          <Link
+            onClick={closeMenu}
+            href={link.href}
+            key={link.name}
+            className={`${menuOpen && "block"} hover:underline`}
+          >
+            {link.name}
+          </Link>
+        ))}
     </>
   );
 }
