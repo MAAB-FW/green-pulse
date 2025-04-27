@@ -20,7 +20,7 @@ const adminNav: NavLinks = [
   { name: "Donations", href: "/dashboard/admin/donations" },
   { name: "Event Management", href: "/dashboard/admin/event-management" },
   { name: "Manage Users", href: "/dashboard/admin/manage-users" },
-  { name: "overview", href: "/dashboard/admin/Overview" },
+  { name: "Overview", href: "/dashboard/admin/overview" },
   {
     name: "Reports And Analytics",
     href: "/dashboard/admin/reports-n-analytics",
