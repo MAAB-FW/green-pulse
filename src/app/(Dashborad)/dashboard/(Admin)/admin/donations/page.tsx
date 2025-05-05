@@ -76,22 +76,12 @@ export default function Donations() {
         <div className="overflow-x-auto rounded-lg bg-white shadow-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                  Donor
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                  Amount
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-                  Campaign
-                </th>
+              <tr className="*:px-6 *:py-3 *:text-left *:text-xs *:font-medium *:tracking-wider *:text-gray-500 *:uppercase">
+                <th>Donor</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Campaign</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
