@@ -4,6 +4,7 @@ import { setUser } from "@/redux/features/user/userSlice";
 import { RootState } from "@/redux/store";
 import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NEXT_PUBLIC_API_URL } from "../../env";
@@ -22,6 +23,8 @@ const AuthProvider = ({
         const { data } = await axios(
           `${NEXT_PUBLIC_API_URL}/api/users/${email}`
         );
+        // Store role in cookie
+        Cookies.set("userRole", data);
         return dispatch(setRole(data));
       };
       getUserRoleType();
@@ -29,8 +32,13 @@ const AuthProvider = ({
   }, [dispatch, email]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        // Store token in cookie
+        user.getIdToken().then((token) => {
+          Cookies.set("token", token);
+        });
+
         dispatch(
           setUser({
             _id: user.uid,
@@ -41,9 +49,16 @@ const AuthProvider = ({
             error: "",
           })
         );
+      } else {
+        // Clear cookies on logout
+        Cookies.remove("token");
+        Cookies.remove("userRole");
       }
     });
+
+    return () => unsubscribe();
   }, [dispatch]);
+
   return children;
 };
 
