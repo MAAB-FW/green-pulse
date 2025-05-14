@@ -1,35 +1,35 @@
 "use client";
-import { baseApi } from "@/redux/features/api/baseApi";
+// import { baseApi } from "@/redux/features/api/baseApi";
 import ReduxProvider from "@/services/ReduxProvider";
 import { UserType } from "@/types";
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 // Add the new endpoint to baseApi
-baseApi.enhanceEndpoints({
-  addTagTypes: ["User"],
-  endpoints: (builder) => ({
-    getUsers: builder.query({
-      query: () => "users",
-      providesTags: ["User"],
-    }),
-    updateUserRole: builder.mutation({
-      query: ({ email, type }) => ({
-        url: `users/${email}/role`,
-        method: "PATCH",
-        body: { type },
-      }),
-      invalidatesTags: ["User"],
-    }),
-    deleteUser: builder.mutation({
-      query: (email) => ({
-        url: `users/${email}`,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["User"],
-    }),
-  }),
-});
+// baseApi.enhanceEndpoints({
+//   addTagTypes: ["User"],
+//   endpoints: (builder) => ({
+//     getUsers: builder.query({
+//       query: () => "users",
+//       providesTags: ["User"],
+//     }),
+//     updateUserRole: builder.mutation({
+//       query: ({ email, type }) => ({
+//         url: `users/${email}/role`,
+//         method: "PATCH",
+//         body: { type },
+//       }),
+//       invalidatesTags: ["User"],
+//     }),
+//     deleteUser: builder.mutation({
+//       query: (email) => ({
+//         url: `users/${email}`,
+//         method: "DELETE",
+//       }),
+//       invalidatesTags: ["User"],
+//     }),
+//   }),
+// });
 
 export default function ManageUsers() {
   const [selectedRole, setSelectedRole] = useState<UserType>("user");
