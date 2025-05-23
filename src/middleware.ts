@@ -30,6 +30,20 @@ export async function middleware(request: NextRequest) {
     try {
       const userRole = request.cookies.get("userRole")?.value || "user";
 
+      // Only 'user' can access these dashboard routes
+      const userOnlyRoutes = [
+        "/dashboard/donate-now",
+        "/dashboard/my-donations",
+        "/dashboard/my-profile",
+        "/dashboard/transaction-history",
+      ];
+      if (
+        userOnlyRoutes.some((route) => path.startsWith(route)) &&
+        userRole !== "user"
+      ) {
+        return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
+      }
+
       if (path.includes("/admin/") && userRole !== "admin") {
         return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
       }
