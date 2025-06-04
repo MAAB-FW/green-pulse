@@ -3,7 +3,7 @@ import ReduxProvider from "@/services/ReduxProvider";
 import { useState } from "react";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
-export default function EventManagement() {
+export default function EventManagement(): React.ReactNode {
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   return (
@@ -107,7 +107,7 @@ function EventCard({
   );
 }
 
-function CreateEventModal({ onClose }: { onClose: () => void }) {
+const CreateEventModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div className="flex min-h-screen items-center justify-center px-4">
@@ -178,4 +178,4 @@ function CreateEventModal({ onClose }: { onClose: () => void }) {
       </div>
     </div>
   );
-}
+};
