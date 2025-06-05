@@ -7,7 +7,7 @@ export type User = {
   email: string;
   isLoading: boolean;
   isError: boolean;
-  error: string;
+  error: string | null;
 };
 
 export interface PaymentIntentRequest {
@@ -15,5 +15,29 @@ export interface PaymentIntentRequest {
 }
 
 export interface PaymentIntentResponse {
-  client_secret: string;
+  clientSecret: string;
+}
+
+// Add these interfaces
+export interface DashboardCardProps {
+  title: string;
+  description: string;
+  href: string;
+  icon?: React.ReactNode;
+}
+
+export interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+  address?: string;
+  phone?: string;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  error?: string;
 }
