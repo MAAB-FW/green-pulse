@@ -1,6 +1,7 @@
 "use client";
 import { RootState } from "@/redux/store";
 import ReduxProvider from "@/services/ReduxProvider";
+import { DashboardCardProps } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -53,17 +54,12 @@ function DashboardContent() {
   );
 }
 
-function DashboardCard({
+const DashboardCard: React.FC<DashboardCardProps> = ({
   title,
   description,
   href,
   icon,
-}: {
-  title: string;
-  description: string;
-  href: string;
-  icon?: React.ReactNode;
-}) {
+}) => {
   return (
     <Link
       href={href}
@@ -78,7 +74,7 @@ function DashboardCard({
       </div>
     </Link>
   );
-}
+};
 
 function AdminDashboardCards() {
   return (
