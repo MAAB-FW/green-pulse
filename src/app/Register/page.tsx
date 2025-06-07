@@ -1,5 +1,6 @@
 "use client";
 import { auth } from "@/firebase/firebase.config";
+import { FormData } from "@/types";
 import axios from "axios";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import toast from "react-hot-toast";
 import { NEXT_PUBLIC_API_URL } from "../../../env";
 
 const RegisterPage: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     password: "",
@@ -17,12 +18,15 @@ const RegisterPage: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       return setError("Passwords do not match.");
