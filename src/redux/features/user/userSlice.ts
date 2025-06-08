@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../../types";
+import { User } from "@/types";
 
-const initialState: User = {
+interface UserState extends User {
+  isLoading: boolean;
+  isError: boolean;
+  error: string | null;
+}
+
+const initialState: UserState = {
   _id: "",
   name: "",
   email: "",
   isLoading: true,
   isError: false,
-  error: "",
+  error: null,
 };
 
 const userSlice = createSlice({
