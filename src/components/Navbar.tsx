@@ -84,7 +84,7 @@ function UserOrLogin() {
   return (
     <>
       {!name ? (
-        <>
+        <div className="flex items-center justify-between space-x-2">
           <Link href="/Login" className="hover:underline">
             Login
           </Link>
@@ -94,7 +94,7 @@ function UserOrLogin() {
           >
             Register
           </Link>
-        </>
+        </div>
       ) : (
         <div className="flex items-center justify-between space-x-2">
           <div className="space-x-1">
