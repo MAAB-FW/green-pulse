@@ -80,7 +80,7 @@ const CheckoutForm = ({
   // get clientSecret from server
   const [paymentIntent, { data, error }] = useCreatePaymentIntentMutation();
 
-  const clientSecret = data?.client_secret || "";
+  const clientSecret = data?.clientSecret || "";
   useEffect(() => {
     if (isCardComplete && amount > 0) {
       paymentIntent({ price: Math.round(amount * 100) });
